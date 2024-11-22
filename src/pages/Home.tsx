@@ -23,7 +23,7 @@ export const Home = () => {
         <Link
           to="/login"
           title="Login page"
-          className="my-2 block rounded-[30px] border-2 border-white bg-transparent py-3 text-xl font-bold text-white lg:hidden"
+          className="my-2 block rounded-[30px] border-2 border-white bg-transparent px-16 py-3 text-xl font-bold text-white lg:hidden"
         >
           Login
         </Link>

@@ -26,7 +26,7 @@ export function Nav() {
         <a href="/" title="Go to home page">
           <svg className="h-10" viewBox="0 0 519 123">
             <g fill="none" fillRule="evenodd">
-              <title>Tinder</title>
+              <title>Campus Connect</title>
               <path
                 d="M31.5 49.6C55 41.5 59 20.4 56 1c0-.7.6-1.2 1.2-1C79.7 11 105 35 105 71c0 27.6-21.4 52-52.5 52a50 50 0 0 1-28.2-92.7c.6-.4 1.4 0 1.4.7.3 3.7 1.3 13 5.4 18.6h.4z"
                 fill="white"
@@ -40,9 +40,8 @@ export function Nav() {
         </a>
 
         <div
-          className={`flex items-center transition-all justify-center h-screen w-full absolute left-0 top-0  bg-black/50 backdrop-blur-md z-1 lg:flex lg:ml-0 lg:h-0 lg:static lg:justify-end ${
-            isMenuClicked ? "ml-0" : "ml-[-100%]"
-          }`}
+          className={`flex items-center transition-all justify-center h-screen w-full absolute left-0 top-0  bg-black/50 backdrop-blur-md z-1 lg:flex lg:ml-0 lg:h-0 lg:static lg:justify-end ${isMenuClicked ? "ml-0" : "ml-[-100%]"
+            }`}
         >
           <ul className="flex items-center flex-col lg:flex-row">
             {decoLinks.map((link, index) => (
@@ -74,11 +73,10 @@ export function Nav() {
         >
           <div
             className={` transition-all rounded-md h-1 w-9 before:content-[''] before:absolute before:h-1 before:bg-white before:w-9  after:content-[''] after:absolute after:h-1 after:w-9  after:bg-white 
-                  ${
-                    isMenuClicked
-                      ? "bg-transparent rotate-[360deg] after:rotate-[-45deg]  before:rotate-45 before:translate-y-0 after:translate-y-0"
-                      : "bg-white before:translate-y-[-10px] after:translate-y-[10px]"
-                  }
+                  ${isMenuClicked
+                ? "bg-transparent rotate-[360deg] after:rotate-[-45deg]  before:rotate-45 before:translate-y-0 after:translate-y-0"
+                : "bg-white before:translate-y-[-10px] after:translate-y-[10px]"
+              }
                   `}
           ></div>
         </div>
