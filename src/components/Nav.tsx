@@ -1,4 +1,5 @@
 import { useState } from "react";
+import logo_withcap from "../assets/img/logo_withcap.png";
 
 export function Nav() {
   const [isMenuClicked, setIsMenuClicked] = useState(false);
@@ -24,7 +25,7 @@ export function Nav() {
         className={`flex items-center justify-between box-border w-full absolute p-[2rem]`}
       >
         <a href="/" title="Go to home page">
-          <svg className="h-10" viewBox="0 0 519 123">
+          {/* <svg className="h-10" viewBox="0 0 519 123">
             <g fill="none" fillRule="evenodd">
               <title>Campus Connect</title>
               <path
@@ -36,7 +37,12 @@ export function Nav() {
                 fill="white"
               ></path>
             </g>
-          </svg>
+          </svg> */}
+          <img
+            src={logo_withcap}
+            alt="Logo"
+            className="h-20 w-auto"
+          />
         </a>
 
         <div
