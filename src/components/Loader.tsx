@@ -1,8 +1,9 @@
+import logo from "../assets/img/logo.png";
 export const Loader = () => {
   return (
     <div className="pointer-events-none fixed z-50 flex h-screen w-full animate-[opacity_2s_forwards] items-center justify-center bg-gradient-to-r from-darkPink to-coralRed">
       <div>
-        <svg
+        {/* <svg
           className="animate-ping"
           viewBox="0 0 24 24"
           width="64px"
@@ -17,7 +18,12 @@ export const Loader = () => {
               {" "}
             </path>
           </g>
-        </svg>
+        </svg> */}
+        <img
+          src={logo}
+          alt="Logo"
+          className="animate-ping h-20 w-auto"
+        />
       </div>
     </div>
   );
