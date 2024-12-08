@@ -9,6 +9,7 @@ export const RegisterPage = () => {
     password: "",
     gender: "",
     dob: "",
+    role: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -115,6 +116,23 @@ export const RegisterPage = () => {
                 <option value="0">Male</option>
                 <option value="1">Female</option>
                 <option value="2">Other</option>
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-600" htmlFor="role">
+                Role
+              </label>
+              <select
+                id="role"
+                name="role"
+                value={formData.role}
+                onChange={handleInputChange}
+                className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="">Select your Role</option>
+                <option value="0">Teacher</option>
+                <option value="1">Student</option>
               </select>
             </div>
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios"; 
+import axios from "axios";
 import { Loader, Nav } from "../components";
 
 export const LoginPage = () => {
@@ -8,11 +8,9 @@ export const LoginPage = () => {
     password: "",
   });
 
-  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -27,20 +25,19 @@ export const LoginPage = () => {
     setError(null);
 
     try {
-      const response = await axios.post("http://localhost:8888/api/users/login", formData);
+      const response = await axios.post(
+        "http://localhost:8888/api/users/login",
+        formData,
+        { withCredentials: true } // Gửi cookie session đến server
+      );
 
       if (response.status === 200) {
         alert("Login successful!");
-        localStorage.setItem("authToken", response.data.token); 
-        window.location.href = "/dashboard"; 
+        localStorage.setItem("authToken", response.data.token); // Lưu token
+        window.location.href = "/dashboard"; // Chuyển đến dashboard
       }
     } catch (err) {
-      
-      if (err.response) {
-        setError(err.response.data.message || "Login failed.");
-      } else {
-        setError("Error connecting to the server.");
-      }
+      setError(err.response?.data?.message || "Login failed.");
     } finally {
       setLoading(false);
     }
