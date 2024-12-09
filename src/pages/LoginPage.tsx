@@ -11,7 +11,7 @@ export const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -19,7 +19,7 @@ export const LoginPage = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
@@ -36,7 +36,7 @@ export const LoginPage = () => {
         localStorage.setItem("authToken", response.data.token); // Lưu token
         window.location.href = "/dashboard"; // Chuyển đến dashboard
       }
-    } catch (err) {
+    } catch (err: any) {
       setError(err.response?.data?.message || "Login failed.");
     } finally {
       setLoading(false);

@@ -18,11 +18,11 @@ export const EditProfile = () => {
     const [love, setLove] = useState("");
     const navigate = useNavigate(); // Khởi tạo useNavigate
     
-    const handleDateChange = (date) => {
+    const handleDateChange = (date : any) => {
         setSelectedDate(date);
     };
 
-    const handSave = (e) => {
+    const handSave = (e: any) => {
         e.preventDefault();
         
         const dataProfile = { image,name, email,gender, selectedDate, love };
@@ -38,11 +38,12 @@ export const EditProfile = () => {
         
     };
     
-    const handleImageChange = (e) => {
+    const handleImageChange = (e: any) => {
         const file = e.target.files[0]; // Lấy file người dùng chọn
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
+                const [image, setImage] = useState<string | ArrayBuffer | null>(null);
                 setImage(reader.result); // Lưu ảnh vào state
             };
             reader.readAsDataURL(file); // Chuyển file thành URL

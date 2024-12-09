@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Home, LoginPage, RegisterPage, NotFoundPage, Profile ,  EditProfile } from "./pages";
+import { Home, LoginPage, RegisterPage, NotFoundPage, Profile ,  EditProfile, Settings, ResetPassword } from "./pages";
 
 function App() {
   return (
@@ -11,6 +11,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/editprofile" element ={<EditProfile/>}/>
+        <Route path="/settings" element ={<Settings/>}/>
+        <Route path="/forgotpassword" element ={<ResetPassword/>}/>
       </Routes>
     </>
   );
