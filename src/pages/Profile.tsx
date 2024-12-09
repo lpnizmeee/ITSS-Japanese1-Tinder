@@ -12,10 +12,11 @@ type User = {
     gender: number;
     dob: string;
     image?: string;
-    firstFavourite?: string,
-    secondFavourite?: string,
-    thirdFavourite?: string,
-    fourthFavourite?: string,
+    imageURL?: string;
+    firstFavourite?: string;
+    secondFavourite?: string;
+    thirdFavourite?: string;
+    fourthFavourite?: string;
     fifthFavourite?: string
 };
 
@@ -60,7 +61,7 @@ export const Profile = () => {
             <div className="profile-container max-w-xl mx-auto p-4">
                 <div className="profile-header flex flex-col items-center">
                     <img
-                        src={user.image || background}
+                        src={user.imageURL || background}
                         alt="Profile"
                         className="profile-pic w-64 h-auto mb-4"
                     />
