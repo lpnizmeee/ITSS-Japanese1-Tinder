@@ -46,7 +46,7 @@ export const Settings = () => {
     try {
       // Send logout request to API
       await axios.post(
-        'http://localhost:8888/api/logout', // Replace with your API endpoint
+        'http://localhost:8888/api/users/logout', // Replace with your API endpoint
         {},
         { withCredentials: true }
       );
