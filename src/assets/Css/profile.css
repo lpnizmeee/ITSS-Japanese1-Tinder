@@ -1,6 +1,5 @@
 .name {
-    height: 30px;
-  width: 400px;
-  background-color: rgb(185, 16, 39);
-    text-emphasis-color: rgb(233, 230, 228);
+  height: auto;
+  width: 70%;
+  text-emphasis-color: rgb(233, 230, 228);
 }
