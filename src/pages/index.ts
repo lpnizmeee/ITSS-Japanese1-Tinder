@@ -4,6 +4,8 @@ import { RegisterPage } from "./RegisterPage";
 import { NotFoundPage } from "./NotFoundPage";
 import { Profile } from "./Profile";
 import { EditProfile } from "./EditProfile";
+import { Dashboard } from "./Dashboard";
+
 import { Settings } from "./Settings";
 import { ResetPassword } from "./ResetPassword"
-export { Home, LoginPage, RegisterPage, NotFoundPage, Profile, EditProfile, Settings, ResetPassword };
+export { Home, LoginPage, RegisterPage, NotFoundPage, Profile, EditProfile, Dashboard, Settings, ResetPassword };
