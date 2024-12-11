@@ -6,46 +6,44 @@ import axios from "axios";
 import { Nav } from "../components";
 
 type User = {
-    id: number;
+    userID: number;
     email: string;
     name: string;
     role: number;
     gender: number;
     dob: string;
-    image?: string;
     imageURL?: string;
     firstFavourite?: string;
     secondFavourite?: string;
     thirdFavourite?: string;
     fourthFavourite?: string;
-    fifthFavourite?: string
+    fifthFavourite?: string;
 };
 
 export const Profile = () => {
     const [user, setUser] = useState<User | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
                 const response = await axios.get<{ user: User }>(
-                    "http://localhost:8888/api/users/profile",
+                    "http://localhost:8888/api/users/profile", // API lấy thông tin từ session
                     { withCredentials: true }
                 );
                 setUser(response.data.user);
             } catch (err: any) {
-                setError(err.response?.data?.message || "Unauthorized");
+                setError(err.response?.data?.message || "Error fetching profile");
             }
         };
 
         fetchProfile();
     }, []);
 
-    const navigate = useNavigate();
-
     const onEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        navigate("/editprofile");
+        navigate("/editprofile"); // Điều hướng đến trang chỉnh sửa
     };
 
     if (error) {
@@ -59,9 +57,9 @@ export const Profile = () => {
     return (
         <div>
             <Nav />
-            <div className="flex min-h-screen items-center justify-center bg-gray-100 ">
+            <div className="flex min-h-screen items-center justify-center bg-gray-100 bg-gradient-to-r from-darkPink to-coralRed">
                 <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
-                    <PageTitle />
+                    <PageTitle title="プロフィール" />
                     <div className="profile-container max-w-xl mx-auto p-4">
                         <div className="profile-header flex flex-col items-center">
                             <img
@@ -80,22 +78,28 @@ export const Profile = () => {
 
                             <div className="flex justify-between items-center mb-2">
                                 <span className="font-bold">性別:</span>
-                                <span>{user.gender == 0 ? "男性" : user.gender == 1 ? "女性" : "他"}</span>
+                                <span>
+                                    {user.gender === 0
+                                        ? "男性"
+                                        : user.gender === 1
+                                            ? "女性"
+                                            : "他"}
+                                </span>
                             </div>
 
                             <div className="flex justify-between items-center mb-2">
-                                <label htmlFor="birthday">誕生日</label>
+                                <span className="font-bold">誕生日</span>
                                 <span>{user.dob}</span>
                             </div>
 
                             <div className="flex justify-between mb-2">
                                 <span className="font-bold">趣味:</span>
-                                <span>{user.fifthFavourite}</span>
+                                <span>{user.firstFavourite || "未登録"}</span>
                             </div>
 
                             <div className="flex justify-between items-center mb-2">
                                 <span className="font-bold">役割:</span>
-                                <span>{user.role == 0 ? "教師" : "学生"}</span>
+                                <span>{user.role === 0 ? "教師" : "学生"}</span>
                             </div>
                         </div>
 
