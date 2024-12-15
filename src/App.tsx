@@ -4,7 +4,7 @@ import { Home, LoginPage, RegisterPage, NotFoundPage, Profile ,  EditProfile, Da
 
 function App() {
   const user = {
-    avatar: "user-avatar-placeholder.png",
+    avatar: "https://img.freepik.com/premium-vector/avatar-icon0002_750950-43.jpg",
     name: "山田 太郎",
     role: "学生",
     info: "趣味: 音楽、読書",
