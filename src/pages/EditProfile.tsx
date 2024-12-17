@@ -1,147 +1,149 @@
-import { PageTitle, Loader, Nav } from "../components";
-import background from "../assets/img/background.webp";
 import "../assets/Css/profile.css";
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-
+import { PageTitle, Nav } from "../components";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const EditProfile = () => {
-    const [image, setImage] = useState(null); // Trạng thái lưu ảnh đã chọn
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     const [name, setName] = useState("");
-    const [email, setEmail]=useState("")
-    const [gender, setGender] = useState("");
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [love, setLove] = useState("");
-    const navigate = useNavigate(); // Khởi tạo useNavigate
-    
-    const handleDateChange = (date : any) => {
-        setSelectedDate(date);
-    };
+    const [email, setEmail] = useState("");
+    const [gender, setGender] = useState<number | null>(null);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [imageURL, setImageURL] = useState("");
 
-    const handSave = (e: any) => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                setLoading(true);
+                const response = await axios.get("http://localhost:8888/api/users/profile", {
+                    withCredentials: true,
+                });
+                const userData = response.data.user;
+                setName(userData.name || "");
+                setEmail(userData.email || "");
+                setGender(userData.gender);
+                console.log(gender);
+                setSelectedDate(userData.dob ? new Date(userData.dob) : null);
+                setImageURL(userData.imageURL || "");
+            } catch (err: any) {
+                setError(err.response?.data?.message || "Unauthorized");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProfile();
+    }, []);
+
+    const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
-        
-        const dataProfile = { image,name, email,gender, selectedDate, love };
-        console.log(dataProfile);
-        navigate("/profile", { state: dataProfile });
-        // fetch('http://localhost:5173/profile', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(dataProfile)
-        // })
-        
-    };
-    
-    const handleImageChange = (e: any) => {
-        const file = e.target.files[0]; // Lấy file người dùng chọn
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const [image, setImage] = useState<string | ArrayBuffer | null>(null);
-                setImage(reader.result); // Lưu ảnh vào state
+
+        try {
+            const updatedUser = {
+                name,
+                email,
+                gender: gender !== null ? parseInt(gender.toString(), 10) : null, // Chuyển `gender` thành số
+                dob: selectedDate ? selectedDate.toISOString().split("T")[0] : null,
+                imageURL,
             };
-            reader.readAsDataURL(file); // Chuyển file thành URL
+
+            await axios.put("http://localhost:8888/api/users/profile", updatedUser, {
+                withCredentials: true,
+            });
+
+            navigate("/profile");
+        } catch (err: any) {
+            setError(err.response?.data?.message || "Error updating profile.");
         }
     };
-    
+
+    if (loading) {
+        return <div className="text-center">Loading...</div>;
+    }
 
     return (
         <div>
-            <PageTitle />
-            <form onSubmit={handSave}>
-                <div className="profile-container max-w-xl mx-auto p-4">
-                <div className="profile-header flex flex-col items-center">
-                    <img
-                        src={image || "path_to_default_image.jpg"} // Nếu không có ảnh chọn thì hiển thị ảnh mặc định
-                        alt="Profile"
-                        className="profile-pic w-64 h-auto mb-4"
-                    />
-                    <input
-                        type="file"
-                        accept="image/*" // Chỉ cho phép chọn ảnh
-                        onChange={handleImageChange}
-                        className="hidden" // Ẩn input chọn file
-                        id="file-input"
-                    />
-                    <label htmlFor="file-input" className="cursor-pointer text-blue-500">
-                        Change Picture
-                    </label>
-                </div>
-                    <div className="profile-info ml-4 mt-4 space-y-2 text-white">
-                        <div className="flex justify-between mb-2">
-                            <label htmlFor="name">Name</label>
-                            <input 
+            <Nav />
+            <div className="flex min-h-screen items-center justify-center bg-gray-100 bg-gradient-to-r from-darkPink to-coralRed">
+                <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+                    <PageTitle title="プロフィール編集" />
+                    <form onSubmit={handleSave}>
+                        {error && <div className="text-red-500 text-center mb-4">{error}</div>}
+                        <div className="profile-header flex flex-col items-center">
+                            <img
+                                src={imageURL || "default_image.jpg"}
+                                alt="Profile"
+                                className="w-64 h-auto mb-4 rounded"
+                            />
+                            <input
                                 type="text"
-                                className="name"
+                                placeholder="Paste image URL"
+                                value={imageURL}
+                                onChange={(e) => setImageURL(e.target.value)}
+                                className="w-full p-2 border rounded focus:outline-none"
+                            />
+                        </div>
+                        <div className="space-y-4">
+                            <input
+                                type="text"
+                                placeholder="Name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
+                                className="w-full p-2 border rounded"
                             />
-                        </div>
-                        <div className="flex justify-between mb-2">
-                            <label htmlFor="name">Email</label>
-                            <input 
-                                type="text"
-                                className="name"
+                            <input
+                                type="email"
+                                placeholder="Email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                className="w-full p-2 border rounded"
                             />
-                        </div>
-                        <div className="flex justify-between items-center mb-2">
-                            <label htmlFor="gender">Gender</label>
-                            <div>
+                            <div className="flex items-center">
                                 <input
                                     type="radio"
-                                    id="radio-2"
                                     name="gender"
-                                    value="Male"
-                                    onChange={(e) => setGender(e.target.value)}
+                                    value={0}
+                                    checked={gender === 0}
+                                    onChange={(e) => setGender(parseInt(e.target.value))}
                                 />
-                                <label htmlFor="radio-2">Male</label>
-                            </div>
-                            <div>
+                                男性
                                 <input
                                     type="radio"
-                                    id="radio-3"
                                     name="gender"
-                                    value="Female"
-                                    onChange={(e) => setGender(e.target.value)}
+                                    value={1}
+                                    checked={gender === 1}
+                                    onChange={(e) => setGender(parseInt(e.target.value))}
                                 />
-                                <label htmlFor="radio-3">Female</label>
+                                女性
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value={2}
+                                    checked={gender === 2}
+                                    onChange={(e) => setGender(parseInt(e.target.value))}
+                                />
+                                他
                             </div>
-                        </div>
-                        <div className="flex justify-between items-center mb-2">
-                            <label htmlFor="birthday">Birth day</label>
                             <DatePicker
                                 selected={selectedDate}
-                                onChange={handleDateChange}
+                                onChange={(date) => setSelectedDate(date)}
                                 dateFormat="dd/MM/yyyy"
-                                placeholderText="Select your date of birth"
-                                className="bg-gray-800 text-white p-2 rounded"
-                            
+                                className="w-full p-2 border rounded"
                             />
                         </div>
-                        <div className="flex justify-between">
-                            <label htmlFor="love">Love</label>
-                            <textarea
-                                className="name"
-                                value={love}
-                                onChange={(e) => setLove(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <div className="profile-actions mt-6 flex justify-center">
-                        <button type="submit" className="edit-button bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                        <button type="submit" className="mt-4 w-full bg-blue-500 text-white py-2 rounded">
                             Save
                         </button>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowRightIcon } from "@heroicons/react/solid";
+import favicon from "../assets/icons/favicon.ico";
 
 export const Dashboard = () => {
   const [matchingUsers, setMatchingUsers] = useState([]);
@@ -104,7 +105,7 @@ export const Dashboard = () => {
         <div className="flex items-center gap-4">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
             <img
-              src="https://img.freepik.com/premium-vector/avatar-icon0002_750950-43.jpg"
+              src={favicon}
               alt="Logo"
               className="h-full w-full"
             />

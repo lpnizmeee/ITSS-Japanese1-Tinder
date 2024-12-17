@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Loader, Nav } from '../components';
+import { Nav } from '../components';
 
 export const Settings = () => {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ export const Settings = () => {
     try {
       // Send logout request to API
       await axios.post(
-        'http://localhost:8888/api/logout', // Replace with your API endpoint
+        'http://localhost:8888/api/users/logout', // Replace with your API endpoint
         {},
         { withCredentials: true }
       );
@@ -65,7 +65,6 @@ export const Settings = () => {
 
   return (
     <div>
-      <Loader />
       <Nav />
       <div className="flex min-h-screen items-center justify-center bg-gray-100 ">
         <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
