@@ -189,20 +189,12 @@ export const Settings = () => {
                     type="checkbox"
                     name="notifications"
                     checked={settings.notifications}
-                    onChange={handleSettingChange}
+                    onChange={() => setSettings(prevSettings => ({
+                      ...prevSettings,
+                      notifications: !prevSettings.notifications
+                    }))}
                   />
-                  <span className="ml-2">On</span>
-                </label>
-              </div>
-              <div>
-                <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    name="notifications"
-                    checked={!settings.notifications}
-                    onChange={handleSettingChange}
-                  />
-                  <span className="ml-2">Off</span>
+                  <span className="ml-2">{settings.notifications ? 'On' : 'Off'}</span>
                 </label>
               </div>
             </div>
