@@ -85,14 +85,14 @@ export const Dashboard = () => {
   const renderContent = () => {
     if (matchingUsers.length === 0 || currentUserIndex >= matchingUsers.length) {
       return (
-        <div className="flex flex-col flex-grow items-center justify-center bg-gray-100">
+        <div className="flex flex-col flex-grow items-center justify-center bg-gradient-to-r from-darkPink to-coralRed">
           <h2 className="text-xl font-semibold text-gray-500">No users found</h2>
           <p className="text-sm text-gray-400">Please try again later.</p>
         </div>
       );
     } else {
       return (
-        <div className="flex flex-grow items-center justify-center bg-gray-100">
+        <div className="flex flex-grow items-center justify-center bg-gradient-to-r from-darkPink to-coralRed">
           <ProfileCard user={matchingUsers[currentUserIndex]} />
         </div>
       );
@@ -172,9 +172,9 @@ export const Dashboard = () => {
           <p className="text-sm text-gray-500">
             {user.role == 0 ? "Teacher" : "Student"}
           </p>
-          <div className="flex space-x-4 text-sm text-gray-500">
+          <div className="flex items-center flex-wrap gap-2">
             {user.favorites.map((fav, index) => (
-              <span key={index} className="flex items-center">
+              <span key={index} className="chip bg-gray-200 text-gray-800 py-1 px-3 rounded-full">
                 {fav}
               </span>
             ))}

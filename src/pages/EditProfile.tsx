@@ -6,15 +6,38 @@ import { PageTitle, Nav } from "../components";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const favourites = [
+    "Chạy bộ",
+    "Bóng đá",
+    "Bơi lội",
+    "Yoga",
+    "Ca hát",
+    "Chơi nhạc cụ",
+    "Nhiếp ảnh",
+    "Vẽ tranh",
+    "Đọc sách",
+    "Xem phim",
+    "Chơi game",
+    "Du lịch",
+    "Khám phá ẩm thực",
+    "Thiền",
+    "Chăm sóc cây cối",
+    "Nuôi thú cưng",
+    "Làm đồ handmade",
+    "Tham gia thiện nguyện",
+    "Học ngoại ngữ",
+    "Sưu tầm",
+];
+
 export const EditProfile = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
     const [gender, setGender] = useState<number | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [imageURL, setImageURL] = useState("");
+    const [selectedFavourites, setSelectedFavourites] = useState<string[]>([]);
 
     const navigate = useNavigate();
 
@@ -27,11 +50,10 @@ export const EditProfile = () => {
                 });
                 const userData = response.data.user;
                 setName(userData.name || "");
-                setEmail(userData.email || "");
                 setGender(userData.gender);
-                console.log(gender);
                 setSelectedDate(userData.dob ? new Date(userData.dob) : null);
                 setImageURL(userData.imageURL || "");
+                setSelectedFavourites(userData.favourites || []);
             } catch (err: any) {
                 setError(err.response?.data?.message || "Unauthorized");
             } finally {
@@ -48,10 +70,10 @@ export const EditProfile = () => {
         try {
             const updatedUser = {
                 name,
-                email,
-                gender: gender !== null ? parseInt(gender.toString(), 10) : null, // Chuyển `gender` thành số
+                gender: gender !== null ? parseInt(gender.toString(), 10) : null,
                 dob: selectedDate ? selectedDate.toISOString().split("T")[0] : null,
                 imageURL,
+                favourites: selectedFavourites,
             };
 
             await axios.put("http://localhost:8888/api/users/profile", updatedUser, {
@@ -62,6 +84,11 @@ export const EditProfile = () => {
         } catch (err: any) {
             setError(err.response?.data?.message || "Error updating profile.");
         }
+    };
+
+    const handleFavouriteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedOptions = Array.from(e.target.selectedOptions).map((option) => option.value);
+        setSelectedFavourites(selectedOptions);
     };
 
     if (loading) {
@@ -98,13 +125,6 @@ export const EditProfile = () => {
                                 onChange={(e) => setName(e.target.value)}
                                 className="w-full p-2 border rounded"
                             />
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="w-full p-2 border rounded"
-                            />
                             <div className="flex items-center">
                                 <input
                                     type="radio"
@@ -137,6 +157,21 @@ export const EditProfile = () => {
                                 dateFormat="dd/MM/yyyy"
                                 className="w-full p-2 border rounded"
                             />
+                            <div>
+                                <label className="block mb-2 font-medium">Sở thích</label>
+                                <select
+                                    multiple
+                                    value={selectedFavourites}
+                                    onChange={handleFavouriteChange}
+                                    className="w-full p-2 border rounded"
+                                >
+                                    {favourites.map((favourite, index) => (
+                                        <option key={index} value={index + 1}>
+                                            {favourite}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
                         <button type="submit" className="mt-4 w-full bg-blue-500 text-white py-2 rounded">
                             Save

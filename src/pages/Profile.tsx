@@ -37,10 +37,9 @@ export const Profile = () => {
                 setError(err.response?.data?.message || "Error fetching profile");
             }
         };
-
         fetchProfile();
     }, []);
-
+    console.log(user);
     const onEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         navigate("/editprofile"); // Điều hướng đến trang chỉnh sửa
@@ -92,14 +91,39 @@ export const Profile = () => {
                                 <span>{user.dob}</span>
                             </div>
 
-                            <div className="flex justify-between mb-2">
-                                <span className="font-bold">趣味:</span>
-                                <span>{user.firstFavourite || "未登録"}</span>
-                            </div>
-
                             <div className="flex justify-between items-center mb-2">
                                 <span className="font-bold">役割:</span>
                                 <span>{user.role === 0 ? "教師" : "学生"}</span>
+                            </div>
+                            <div className="flex flex-col items-center justify-between mb-2">
+                                <div className="font-bold mb-2">趣味:</div>
+                                <div className="flex items-center flex-wrap gap-2">
+                                    {user.firstFavourite && (
+                                        <span className="chip bg-gray-200 text-gray-800 py-1 px-3 rounded-full">
+                                            {user.firstFavourite}
+                                        </span>
+                                    )}
+                                    {user.secondFavourite && (
+                                        <span className="chip bg-gray-200 text-gray-800 py-1 px-3 rounded-full">
+                                            {user.secondFavourite}
+                                        </span>
+                                    )}
+                                    {user.thirdFavourite && (
+                                        <span className="chip bg-gray-200 text-gray-800 py-1 px-3 rounded-full">
+                                            {user.thirdFavourite}
+                                        </span>
+                                    )}
+                                    {user.fourthFavourite && (
+                                        <span className="chip bg-gray-200 text-gray-800 py-1 px-3 rounded-full">
+                                            {user.fourthFavourite}
+                                        </span>
+                                    )}
+                                    {user.fifthFavourite && (
+                                        <span className="chip bg-gray-200 text-gray-800 py-1 px-3 rounded-full">
+                                            {user.fifthFavourite}
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                         </div>
 
