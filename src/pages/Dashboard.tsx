@@ -5,7 +5,7 @@ import favicon from "../assets/icons/favicon.ico";
 
 export const Dashboard = () => {
   const [matchingUsers, setMatchingUsers] = useState([]);
-  const [currentUserIndex, setCurrentUserIndex] = useState(0); // Track the current user index
+  const [currentUserIndex, setCurrentUserIndex] = useState(0);
 
   useEffect(() => {
     const fetchMatchingUsers = async () => {
@@ -14,7 +14,7 @@ export const Dashboard = () => {
           "http://localhost:8888/api/users/getMatchingUsers",
           { withCredentials: true },
         );
-        setMatchingUsers(response.data.users); // Set the matching users data
+        setMatchingUsers(response.data.users);
       } catch (err) {
         console.error(err);
       }
@@ -23,14 +23,13 @@ export const Dashboard = () => {
     fetchMatchingUsers();
   }, []);
 
-  // Handle like action
   const handleLike = async () => {
-    const targetUserID = matchingUsers[currentUserIndex].userID; // Get the target user's ID
-    const action = 1; // 1 for like
+    const targetUserID = matchingUsers[currentUserIndex].userID;
+    const action = 1;
 
     try {
       const response = await axios.post(
-        "http://localhost:8888/api/users/action", // Replace with the correct API endpoint
+        "http://localhost:8888/api/users/action",
         { targetUserID, action },
         { withCredentials: true },
       );
@@ -44,22 +43,20 @@ export const Dashboard = () => {
       console.error("Error sending like action:", err);
     }
 
-    // Move to the next user after liking
     if (currentUserIndex < matchingUsers.length - 1) {
-      setCurrentUserIndex(currentUserIndex + 1); // Move to next user
+      setCurrentUserIndex(currentUserIndex + 1);
     } else {
-      setCurrentUserIndex(matchingUsers.length); // Ensure the index exceeds array length
+      setCurrentUserIndex(matchingUsers.length);
     }
   };
 
-  // Handle dislike action (when Next is clicked)
   const handleNext = async () => {
-    const targetUserID = matchingUsers[currentUserIndex].userID; // Get the target user's ID
-    const action = 0; // 0 for dislike
+    const targetUserID = matchingUsers[currentUserIndex].userID;
+    const action = 0;
 
     try {
       const response = await axios.post(
-        "http://localhost:8888/api/users/action", // Replace with the correct API endpoint
+        "http://localhost:8888/api/users/action",
         { targetUserID, action },
         { withCredentials: true },
       );
@@ -73,20 +70,23 @@ export const Dashboard = () => {
       console.error("Error sending dislike action:", err);
     }
 
-    // Move to the next user after disliking
     if (currentUserIndex < matchingUsers.length - 1) {
-      setCurrentUserIndex(currentUserIndex + 1); // Move to next user
+      setCurrentUserIndex(currentUserIndex + 1);
     } else {
-      setCurrentUserIndex(matchingUsers.length); // Ensure the index exceeds array length
+      setCurrentUserIndex(matchingUsers.length);
     }
   };
 
-  // If there are no matching users, show loading or a message
   const renderContent = () => {
-    if (matchingUsers.length === 0 || currentUserIndex >= matchingUsers.length) {
+    if (
+      matchingUsers.length === 0 ||
+      currentUserIndex >= matchingUsers.length
+    ) {
       return (
-        <div className="flex flex-col flex-grow items-center justify-center bg-gradient-to-r from-darkPink to-coralRed">
-          <h2 className="text-xl font-semibold text-gray-500">No users found</h2>
+        <div className="flex flex-grow flex-col items-center justify-center bg-gray-100">
+          <h2 className="text-xl font-semibold text-gray-500">
+            No users found
+          </h2>
           <p className="text-sm text-gray-400">Please try again later.</p>
         </div>
       );
@@ -99,100 +99,89 @@ export const Dashboard = () => {
     }
   };
 
-  const Header = () => {
-    return (
-      <div className="flex items-center justify-between bg-white p-4 shadow">
-        <div className="flex items-center gap-4">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
-            <img
-              src={favicon}
-              alt="Logo"
-              className="h-full w-full"
-            />
-          </div>
-          <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
-            <span role="img" aria-label="Notification">
-              🔔
-            </span>
-          </button>
-          <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
-            <span role="img" aria-label="Event">
-              📅
-            </span>
-          </button>
-          <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
-            <span role="img" aria-label="Settings">
-              ⚙️
-            </span>
-          </button>
+  const Header = () => (
+    <div className="flex items-center justify-between bg-white p-4 shadow">
+      <div className="flex items-center gap-4">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
+          <img src={favicon} alt="Logo" className="h-full w-full" />
         </div>
-        <button className="flex items-center gap-2">
-          <img
-            src="https://img.freepik.com/premium-vector/avatar-icon0002_750950-43.jpg"
-            alt="Avatar"
-            className="h-8 w-8 rounded-full"
-          />
-          <span>メッセージ</span>
+        <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
+          <span role="img" aria-label="Notification">
+            🔔
+          </span>
+        </button>
+        <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
+          <span role="img" aria-label="Event">
+            📅
+          </span>
+        </button>
+        <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
+          <span role="img" aria-label="Settings">
+            ⚙️
+          </span>
         </button>
       </div>
-    );
-  };
+      <button className="flex items-center gap-2">
+        <img
+          src="https://img.freepik.com/premium-vector/avatar-icon0002_750950-43.jpg"
+          alt="Avatar"
+          className="h-8 w-8 rounded-full"
+        />
+        <span>メッセージ</span>
+      </button>
+    </div>
+  );
 
-  const ProfileCard = ({ user }) => {
-    return (
-      <div className="flex h-[300px] w-full max-w-[95%] rounded-lg bg-white p-6 shadow">
-        {/* Left Column: Buttons */}
-        <div className="flex w-1/4 flex-col items-center justify-center gap-4">
-          <button
-            className="flex items-center justify-center rounded-full bg-yellow-100 p-3"
-            onClick={handleLike}
-          >
-            <span role="img" aria-label="Like" className="text-3xl">
-              👍
+  const ProfileCard = ({ user }) => (
+    <div
+      className="relative flex h-full w-full max-w-[100%] flex-col shadow"
+      style={{
+        backgroundImage: `url(${user.avatar})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* User Info */}
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-end">
+        {/* Overlay for better readability */}
+        <h1 className="text-3xl font-bold text-white">{user.name}</h1>
+        <span className="rounded-full bg-gray-800 bg-opacity-75 px-2 py-1 text-sm text-white">
+          {user.role === 0 ? "👨‍🏫 Teacher" : "🎓 Student"}
+        </span>
+        <div className="mt-2 flex max-w-[90%] flex-wrap items-center justify-center gap-2">
+          {user.favorites.map((fav, index) => (
+            <span
+              key={index}
+              className="rounded-full bg-gray-800 bg-opacity-75 px-2 py-1 text-sm text-white"
+            >
+              {fav}
             </span>
-          </button>
-          <button
-            className="flex items-center justify-center rounded-full bg-gray-200 p-3"
-            onClick={handleNext}
-          >
-            <ArrowRightIcon className="h-8 w-8 text-black" aria-label="Next" />
-          </button>
-        </div>
-
-        {/* Right Column: Profile */}
-        <div className="flex w-3/4 flex-col items-center justify-center">
-          <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-200">
-            <img
-              src={user.avatar}
-              alt="Avatar"
-              className="h-full w-full rounded-full"
-            />
-          </div>
-          <h2 className="text-xl font-semibold">{user.name}</h2>
-          <p className="text-sm text-gray-500">
-            {user.role == 0 ? "Teacher" : "Student"}
-          </p>
-          <div className="flex items-center flex-wrap gap-2">
-            {user.favorites.map((fav, index) => (
-              <span key={index} className="chip bg-gray-200 text-gray-800 py-1 px-3 rounded-full">
-                {fav}
-              </span>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
-    );
-  };
+
+      {/* Action Buttons */}
+      <div className="relative z-10 flex items-center justify-evenly rounded-b-lg bg-gray-800 bg-opacity-60 py-4">
+        <button
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-500 text-white shadow hover:bg-blue-600"
+          onClick={handleLike}
+        >
+          <span className="text-4xl">👍</span>
+        </button>
+        <button
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-red-500 text-white shadow hover:bg-red-600"
+          onClick={handleNext}
+        >
+          <ArrowRightIcon className="h-6 w-6" />
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Header */}
-      <div className="w-full">
-        <Header />
-      </div>
-
-      {/* Main Content */}
-      {renderContent()}
+      <Header />
+      <div className="flex flex-grow">{renderContent()}</div>
     </div>
   );
 };
