@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Home, LoginPage, RegisterPage, NotFoundPage, Profile ,  EditProfile, Dashboard, Settings, ResetPassword } from "./pages";
+import { Home, LoginPage, RegisterPage, NotFoundPage, Profile ,  EditProfile, Dashboard, Settings, ResetPassword, EventList , AddEvent} from "./pages";
 
 
 function App() {
@@ -21,6 +21,8 @@ function App() {
         <Route path="/editprofile" element ={<EditProfile/>}/>
         <Route path="/settings" element ={<Settings/>}/>
         <Route path="/forgotpassword" element ={<ResetPassword/>}/>
+        <Route path="/eventlist" element ={<EventList/>}/>
+        <Route path="/add-event" element ={<AddEvent/>}/>
       </Routes>
     </>
   );

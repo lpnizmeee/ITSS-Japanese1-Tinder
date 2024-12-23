@@ -8,4 +8,7 @@ import { Dashboard } from "./Dashboard";
 
 import { Settings } from "./Settings";
 import { ResetPassword } from "./ResetPassword"
-export { Home, LoginPage, RegisterPage, NotFoundPage, Profile, EditProfile, Dashboard, Settings, ResetPassword };
+import { EventList } from "./EventList"
+import { AddEvent } from "./AddEvent"
+
+export { Home, LoginPage, RegisterPage, NotFoundPage, Profile, EditProfile, Dashboard, Settings, ResetPassword, EventList , AddEvent};
