@@ -8,4 +8,5 @@ import { Dashboard } from "./Dashboard";
 
 import { Settings } from "./Settings";
 import { ResetPassword } from "./ResetPassword"
-export { Home, LoginPage, RegisterPage, NotFoundPage, Profile, EditProfile, Dashboard, Settings, ResetPassword };
+import { ChatBox } from "./ChatBox";
+export { Home, LoginPage, RegisterPage, NotFoundPage, Profile, EditProfile, Dashboard, Settings, ResetPassword, ChatBox };
