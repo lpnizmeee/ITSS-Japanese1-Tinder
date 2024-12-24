@@ -10,4 +10,6 @@ import { Settings } from "./Settings";
 import { ResetPassword } from "./ResetPassword"
 import { ChatBox } from "./ChatBox";
 import { MatchingList } from "./MatchingList";
-export { Home, LoginPage, RegisterPage, NotFoundPage, Profile, EditProfile, Dashboard, Settings, ResetPassword, ChatBox, MatchingList };
+import { EventList } from "./EventList";
+import { AddEvent } from "./AddEvent";
+export { Home, LoginPage, RegisterPage, NotFoundPage, Profile, EditProfile, Dashboard, Settings, ResetPassword, ChatBox, MatchingList, EventList, AddEvent };
