@@ -9,4 +9,5 @@ import { Dashboard } from "./Dashboard";
 import { Settings } from "./Settings";
 import { ResetPassword } from "./ResetPassword"
 import { ChatBox } from "./ChatBox";
-export { Home, LoginPage, RegisterPage, NotFoundPage, Profile, EditProfile, Dashboard, Settings, ResetPassword, ChatBox };
+import { MatchingList } from "./MatchingList";
+export { Home, LoginPage, RegisterPage, NotFoundPage, Profile, EditProfile, Dashboard, Settings, ResetPassword, ChatBox, MatchingList };
