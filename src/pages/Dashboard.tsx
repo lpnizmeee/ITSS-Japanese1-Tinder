@@ -114,12 +114,12 @@ export const Dashboard = () => {
           </span>
         </button>
         <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
-          <span role="img" aria-label="Event">
+          <span onClick={() => navigate('/eventlist')} role="img" aria-label="Event">
             📅
           </span>
         </button>
         <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
-          <span role="img" aria-label="Settings">
+          <span onClick={() => navigate('/settings')} role="img" aria-label="Settings">
             ⚙️
           </span>
         </button>
@@ -129,8 +129,14 @@ export const Dashboard = () => {
           src="https://img.freepik.com/premium-vector/avatar-icon0002_750950-43.jpg"
           alt="Avatar"
           className="h-8 w-8 rounded-full"
+          onClick={() => navigate('/profile')}
         />
-        <span onClick={() => navigate('/matchinglist')} className="cursor-pointer">メッセージ</span>
+        <button className="flex h-8 w-8 items-center justify-center rounded-full bg-red-200">
+          <span onClick={() => navigate('/matchinglist')} role="img" aria-label="Message">
+            💌
+          </span>
+        </button>
+        {/* <span  className="cursor-pointer p-4 bg-red-500 rounded-lg">メッセージ</span> */}
       </button>
     </div>
   );

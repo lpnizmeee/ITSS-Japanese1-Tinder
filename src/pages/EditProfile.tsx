@@ -2,7 +2,7 @@ import "../assets/Css/profile.css";
 import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { PageTitle, Nav } from "../components";
+import { PageTitle } from "../components";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -28,6 +28,21 @@ const favourites = [
     "Học ngoại ngữ",
     "Sưu tầm",
 ];
+
+const Header = () => {
+    const navigate = useNavigate();
+    return (
+        <div className="fixed top-0 left-0 right-0 flex items-center justify-between bg-white p-4 shadow z-10 min-w-screen">
+            <div className="flex items-center gap-4">
+                <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
+                    <span onClick={() => navigate('/dashboard')} role="img" aria-label="matchinglist">
+                        🏠︎
+                    </span>
+                </button>
+            </div>
+        </div>
+    );
+};
 
 export const EditProfile = () => {
     const [loading, setLoading] = useState(true);
@@ -97,8 +112,8 @@ export const EditProfile = () => {
 
     return (
         <div>
-            <Nav />
-            <div className="flex min-h-screen items-center justify-center bg-gray-100 bg-gradient-to-r from-darkPink to-coralRed">
+            <Header />
+            <div className="flex min-h-screen mt-5 items-center justify-center bg-gray-100 bg-gradient-to-r from-darkPink to-coralRed">
                 <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
                     <PageTitle title="プロフィール編集" />
                     <form onSubmit={handleSave}>

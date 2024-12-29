@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
-import { PageTitle } from "../components";
 import { format, addHours } from 'date-fns';
+import { useNavigate } from "react-router-dom";
 
 const socket = io("http://localhost:8888", {
     withCredentials: true,
@@ -32,13 +32,27 @@ type Message = {
     time: Date;
 };
 
+const Header = () => {
+    const navigate = useNavigate();
+    return (
+        <div className="fixed top-0 left-0 right-0 flex items-center justify-between bg-white p-4 shadow z-10 min-w-screen">
+            <div className="flex items-center gap-4">
+                <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
+                    <span onClick={() => navigate('/matchinglist')} role="img" aria-label="matchinglist">
+                        ←
+                    </span>
+                </button>
+            </div>
+        </div>
+    );
+};
+
 export const ChatBox = () => {
     const { matchingID } = useParams<{ matchingID: string }>();
     const [messages, setMessages] = useState<Message[]>([]);
     const [content, setContent] = useState("");
     const [userId, setUserId] = useState<number | null>(null);
 
-    console.log(matchingID);
     useEffect(() => {
         const fetchProfile = async () => {
             try {
@@ -55,10 +69,12 @@ export const ChatBox = () => {
     }, []);
 
     useEffect(() => {
-        if (!userId) return;
+        if (!matchingID) return;
 
-        socket.emit("joinRoom", userId);
+        // Tham gia phòng theo matchingID
+        socket.emit("joinRoom", matchingID);
 
+        // Lắng nghe sự kiện nhận tin nhắn
         socket.on("receiveMessage", (data) => {
             if (matchingID && data.matchingID === parseInt(matchingID)) {
                 setMessages((prev) => [...prev, data]);
@@ -76,26 +92,27 @@ export const ChatBox = () => {
         fetchMessages();
 
         return () => {
-            // Rời phòng cũ thay vì ngắt kết nối socket hoàn toàn
-            socket.emit("leaveRoom", userId);
+            // Rời phòng theo matchingID
+            socket.emit("leaveRoom", matchingID);
+            socket.off("receiveMessage"); // Hủy lắng nghe sự kiện khi component unmount
         };
-    }, [userId, matchingID]);
+    }, [messages, matchingID]);
 
     const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const currentTime = format(addHours(new Date(), 0), 'yyyy-MM-dd HH:mm:ss'); // Chuyển đổi thời gian sang định dạng MySQL và múi giờ UTC+7
         const message = { matchingID: matchingID ? parseInt(matchingID) : 0, from: userId ?? 0, context: content, time: currentTime };
         setMessages((prev) => [...prev, message]);
-        socket.emit("sendMessage", { ...message, receiver: matchingID ? parseInt(matchingID) : 0 }); // Gửi tin nhắn qua server
+        socket.emit("sendMessage", message); // Gửi tin nhắn qua server
         setContent("");
     };
 
     return (
         <div>
+            <Header />
             <div className="flex min-h-screen items-center justify-center bg-gray-100 bg-gradient-to-r from-darkPink to-coralRed">
                 <div className="w-full min-h-screen mt-2 mb-2 max-w-md rounded-lg bg-white p-8 shadow-md">
-                    <PageTitle title="メッセージ" />
-                    <div className="messages">
+                    <div className="messages overflow-y-auto max-h-[calc(100vh-100px)]">
                         {messages.map((msg, index) => (
                             <div
                                 key={index}

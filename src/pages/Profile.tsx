@@ -3,7 +3,6 @@ import background from "../assets/img/background.webp";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Nav } from "../components";
 
 type User = {
     userID: number;
@@ -18,6 +17,21 @@ type User = {
     thirdFavourite?: string;
     fourthFavourite?: string;
     fifthFavourite?: string;
+};
+
+const Header = () => {
+    const navigate = useNavigate();
+    return (
+        <div className="fixed top-0 left-0 right-0 flex items-center justify-between bg-white p-4 shadow z-10 min-w-screen">
+            <div className="flex items-center gap-4">
+                <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
+                    <span onClick={() => navigate('/dashboard')} role="img" aria-label="matchinglist">
+                        🏠︎
+                    </span>
+                </button>
+            </div>
+        </div>
+    );
 };
 
 export const Profile = () => {
@@ -55,8 +69,8 @@ export const Profile = () => {
 
     return (
         <div>
-            <Nav />
-            <div className="flex min-h-screen items-center justify-center bg-gray-100 bg-gradient-to-r from-darkPink to-coralRed">
+            <Header />
+            <div className="flex min-h-screen mt-5 items-center justify-center bg-gray-100 bg-gradient-to-r from-darkPink to-coralRed">
                 <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
                     <PageTitle title="プロフィール" />
                     <div className="profile-container max-w-xl mx-auto p-4">

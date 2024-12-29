@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Nav } from '../components';
+
+const Header = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="fixed top-0 left-0 right-0 flex items-center justify-between bg-white p-4 shadow z-10 min-w-screen">
+      <div className="flex items-center gap-4">
+        <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
+          <span onClick={() => navigate('/dashboard')} role="img" aria-label="matchinglist">
+            🏠︎
+          </span>
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export const Settings = () => {
   const navigate = useNavigate();
@@ -65,14 +79,9 @@ export const Settings = () => {
 
   return (
     <div>
-      <Nav />
+      <Header />
       <div className="flex min-h-screen items-center justify-center bg-gray-100 ">
         <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
-          <div className='settings-back-icon justify-start'>
-            <button onClick={() => navigate(-1)} className="text-black text-2xl">
-              &larr; Back
-            </button>
-          </div>
           <div className="settings-header flex items-center justify-center mb-6 mt-6">
             <h2 className="text-5xl font-semibold text-black flex items-center justify-center mb-8 mr-4">
               ⚙️Settings
