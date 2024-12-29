@@ -8,6 +8,7 @@ type User = {
     email: string;
     name: string;
     imageURL?: string;
+    matchingID: number;
 };
 
 type UserInfo = {
@@ -27,41 +28,41 @@ type UserInfo = {
 
 export const MatchingList = () => {
     const [matchingUsers, setMatchingUsers] = useState<User[]>([]);
+    const matchingIDs = matchingUsers.map((user) => user.matchingID);
     const navigate = useNavigate();
     const [userId, setUserId] = useState<number | null>(null);
 
     useEffect(() => {
-        const fetchProfile = async () => {
+        const fetchProfileAndMatchingUsers = async () => {
             try {
-                const response = await axios.get<{ user: UserInfo }>(
+                // Fetch user profile
+                const profileResponse = await axios.get<{ user: UserInfo }>(
                     "http://localhost:8888/api/users/profile", // API lấy thông tin từ session
                     { withCredentials: true }
                 );
-                setUserId(response.data.user.userID);
+                const userId = profileResponse.data.user.userID;
+                setUserId(userId);
+
+                // Fetch matching users
+                const matchingResponse = await axios.post("http://localhost:8888/api/users/matching", { userId });
+                setMatchingUsers(matchingResponse.data.matchingUsers);
             } catch (err: any) {
-                console.error("Error fetching profile:", err);
+                console.error("Error fetching data:", err);
             }
         };
-        fetchProfile();
+
+        fetchProfileAndMatchingUsers();
     }, []);
-    console.log(userId);
+    console.log(matchingIDs);
 
-    useEffect(() => {
-        if (!userId) return;
+    const handleChat = (matchingID: number) => {
+        if (matchingID) {
+            navigate(`/chatbox/${matchingID}`);
+        } else {
+            console.error("matchingID is undefined");
+        }
+    };
 
-        const fetchMatchingUsers = async () => {
-            try {
-                const response = await axios.post("http://localhost:8888/api/users/matching", { userId });
-                setMatchingUsers(response.data.matchingUsers);
-            } catch (err) {
-                console.error("Error fetching matching users:", err);
-            }
-        };
-
-        fetchMatchingUsers();
-    }, [userId]);
-
-    console.log(matchingUsers);
     return (
         <div>
             <div className="flex min-h-screen items-center justify-center bg-gray-100 bg-gradient-to-r from-darkPink to-coralRed">
@@ -71,7 +72,7 @@ export const MatchingList = () => {
                         {matchingUsers.map((user) => (
                             <li
                                 key={user.userID}
-                                onClick={() => handleChat(user.userID)}
+                                onClick={() => handleChat(user.matchingID)}
                                 className="flex items-center p-4 bg-white rounded-lg shadow-md cursor-pointer hover:bg-gray-100"
                             >
                                 <img
@@ -91,3 +92,5 @@ export const MatchingList = () => {
         </div>
     );
 };
+
+export default MatchingList;

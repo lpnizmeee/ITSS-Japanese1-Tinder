@@ -15,7 +15,7 @@ function App() {
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/forgotpassword" element={<ResetPassword />} />
-        <Route path="/chatbox" element={<ChatBox receiverId={2} />} />
+        <Route path="/chatbox/:matchingID" element={<ChatBox />} />
         <Route path="/matchinglist" element={<MatchingList />} />
         <Route path="/eventlist" element={<EventList />} />
         <Route path="/add-event" element={<AddEvent />} />
