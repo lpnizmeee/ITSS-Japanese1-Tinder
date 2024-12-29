@@ -1,26 +1,38 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const AddEvent = () => {
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
-  const [location, setLocation] = useState('');
-  const [description, setDescription] = useState('');
+  const [eventName, setEventName] = useState('');
+  const [eventTime, setEventTime] = useState('');
+  const [eventDescription, setEventDescription] = useState('');
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Kiểm tra nếu thông tin không đầy đủ
-    if (!title || !date || !location || !description) {
+    if (!eventName || !eventTime || !eventDescription) {
       alert('Vui lòng điền đầy đủ thông tin.');
       return;
     }
-    // Logic thêm sự kiện mới
-    console.log({ title, date, location, description });
+
+    createEvent()
     // Sau khi thêm sự kiện, chuyển hướng về danh sách sự kiện
-    navigate('/eventlist'); // Chuyển đến trang EventList
   };
+
+  const createEvent = async () =>{
+    await axios.post('http://localhost:8888/api/users/event/create', {
+      eventName,
+      eventTime,
+      eventDescription,
+      }, 
+      { 
+        withCredentials: true 
+      }
+    )
+    navigate('/eventlist'); // Chuyển đến trang EventList
+  }
 
   const handleClose = () => {
     // Nếu người dùng nhấn vào X, quay lại trang EventList
@@ -67,8 +79,8 @@ export const AddEvent = () => {
           <input
             id="title"
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={eventName}
+            onChange={(e) => setEventName(e.target.value)}
             required
             style={{
               padding: '10px',
@@ -86,29 +98,9 @@ export const AddEvent = () => {
           </label>
           <input
             id="date"
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
-            style={{
-              padding: '10px',
-              width: '100%',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              color: '#000', // Màu chữ bên trong input
-              backgroundColor: '#fff', // Màu nền bên trong input
-            }}
-          />
-        </div>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="location" style={{ display: 'block', marginBottom: '5px', color: '#000' }}>
-            Địa điểm
-          </label>
-          <input
-            id="location"
-            type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            type="datetime-local"
+            value={eventTime}
+            onChange={(e) => setEventTime(e.target.value)}
             required
             style={{
               padding: '10px',
@@ -126,8 +118,8 @@ export const AddEvent = () => {
           </label>
           <textarea
             id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={eventDescription}
+            onChange={(e) => setEventDescription(e.target.value)}
             required
             style={{
               padding: '10px',
