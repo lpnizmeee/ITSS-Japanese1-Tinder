@@ -1,44 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { Loader, Nav } from "../components";
+import axios from "axios";
+import { useDebounce } from "../hooks/useDebounce";
+import moment from 'moment';
 
-const events = [
-  {
-    id: 1,
-    title: 'Hội thảo công nghệ React',
-    description: 'Khám phá những xu hướng mới nhất trong React và hệ sinh thái của nó.',
-    date: '2024-12-30',
-    location: 'Hà Nội, Việt Nam',
-  },
-  {
-    id: 2,
-    title: 'Ngày hội lập trình viên',
-    description: 'Một ngày hội đặc biệt dành cho các lập trình viên và nhà phát triển phần mềm.',
-    date: '2024-12-25',
-    location: 'TP.HCM, Việt Nam',
-  },
-  {
-    id: 3,
-    title: 'Hội thảo AI và ML',
-    description: 'Tìm hiểu về AI, Machine Learning và các ứng dụng trong thực tế.',
-    date: '2025-01-10',
-    location: 'Đà Nẵng, Việt Nam',
-  },
-];
 
 export const EventList = () => {
   const [searchTerm, setSearchTerm] = useState(''); // Từ khóa tìm kiếm
   const [registeredEvents, setRegisteredEvents] = useState([]); // Danh sách sự kiện đã đăng ký
   const [selectedEvent, setSelectedEvent] = useState(null); // Sự kiện được chọn
-  const [filteredEvents, setFilteredEvents] = useState(events); // Danh sách sự kiện đã lọc
+  const [filteredEvents, setFilteredEvents] = useState([]); // Danh sách sự kiện đã lọc
 
   // Hàm xử lý tìm kiếm
   const handleSearch = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
-    const filtered = events.filter((event) =>
-      event.title.toLowerCase().includes(value)
-    );
-    setFilteredEvents(filtered);
   };
 
   // Hàm xử lý đăng ký sự kiện
@@ -59,9 +36,34 @@ export const EventList = () => {
   const closePopup = () => {
     setSelectedEvent(null);
   };
+  const getLocation = () => {
+    return 'TP.HCM, Việt Nam'
+  }
+
+  const loadEvent = async function () {
+    try {
+      const response = await axios.get(
+        `http://localhost:8888/api/users/event/get?eventName=${searchTerm}`
+      );
+
+      setFilteredEvents(response.data.data)
+    } catch (err: any) {
+      console.log(err.message)
+    } 
+  }
+
+  const debouncedSearch = useDebounce(loadEvent, 500);
+
+  useEffect(()=>{
+    debouncedSearch()
+
+  }, [searchTerm])
+
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif', position: 'relative' }}>
+    <div className='h-screen'>
+      <Nav/>
+      <div style={{ padding: '120px', fontFamily: 'Arial, sans-serif', position: 'relative' }}>
       <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Danh sách sự kiện</h1>
 
       {/* Bộ lọc title */}
@@ -85,7 +87,7 @@ export const EventList = () => {
       <div>
         {filteredEvents.map((event) => (
           <div
-            key={event.id}
+            key={event.eventId}
             style={{
               border: '1px solid #ddd',
               borderRadius: '8px',
@@ -94,14 +96,14 @@ export const EventList = () => {
               backgroundColor: '#f9f9f9',
             }}
           >
-            <h2 style={{ marginBottom: '10px', color: '#333' }}>{event.title}</h2>
+            <h2 style={{ marginBottom: '10px', color: '#333' }}>{event.eventName}</h2>
             <p style={{ marginBottom: '5px' }}>
-              <strong>Thời gian:</strong> {event.date}
+              <strong>Thời gian:</strong> {moment(event.eventTime).format("HH:mm:ss DD-MM-YYYY")}
             </p>
             <p style={{ marginBottom: '5px' }}>
-              <strong>Địa điểm:</strong> {event.location}
+              <strong>Địa điểm:</strong> {event.location ? event.location: getLocation() }
             </p>
-            <p style={{ marginBottom: '10px' }}>{event.description}</p>
+            <p style={{ marginBottom: '10px' }}>{event.eventDescription}</p>
 
             {/* Container for buttons */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -124,15 +126,15 @@ export const EventList = () => {
               <button
                 style={{
                   padding: '10px 15px',
-                  backgroundColor: registeredEvents.includes(event.id) ? '#dc3545' : '#28a745',
+                  backgroundColor: registeredEvents.includes(event.eventID) ? '#dc3545' : '#28a745',
                   color: '#fff',
                   border: 'none',
                   borderRadius: '4px',
                   cursor: 'pointer',
                 }}
-                onClick={() => handleRegister(event.id)}
+                onClick={() => handleRegister(event.eventID)}
               >
-                {registeredEvents.includes(event.id) ? 'Hủy đăng ký' : 'Đăng ký'}
+                {registeredEvents.includes(event.eventID) ? 'Hủy đăng ký' : 'Đăng ký'}
               </button>
             </div>
           </div>
@@ -167,14 +169,14 @@ export const EventList = () => {
               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
             }}
           >
-            <h2 style={{ color: '#333' }}>{selectedEvent.title}</h2>
+            <h2 style={{ color: '#333' }}>{selectedEvent.eventName}</h2>
             <p>
-              <strong>Thời gian:</strong> {selectedEvent.date}
+              <strong>Thời gian:</strong> {moment(selectedEvent.eventTime).format("HH:mm:ss DD-MM-YYYY")}
             </p>
             <p>
-              <strong>Địa điểm:</strong> {selectedEvent.location}
+              <strong>Địa điểm:</strong> {getLocation()}
             </p>
-            <p>{selectedEvent.description}</p>
+            <p>{selectedEvent.eventDescription}</p>
             <button
               onClick={closePopup}
               style={{
@@ -219,6 +221,7 @@ export const EventList = () => {
           +
         </button>
       </Link>
+    </div>
     </div>
   );
 };
