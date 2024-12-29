@@ -21,14 +21,14 @@ export const AddEvent = () => {
     // Sau khi thêm sự kiện, chuyển hướng về danh sách sự kiện
   };
 
-  const createEvent = async () =>{
+  const createEvent = async () => {
     await axios.post('http://localhost:8888/api/users/event/create', {
       eventName,
       eventTime,
       eventDescription,
-      }, 
-      { 
-        withCredentials: true 
+    },
+      {
+        withCredentials: true
       }
     )
     navigate('/eventlist'); // Chuyển đến trang EventList
@@ -40,11 +40,10 @@ export const AddEvent = () => {
   };
 
   return (
-    <div
+    <div className='bg-gradient-to-r from-darkPink to-coralRed'
       style={{
         padding: '20px',
         fontFamily: 'Arial, sans-serif',
-        backgroundColor: '#fff',
         minHeight: '100vh', // Chiếm toàn bộ chiều cao màn hình
         display: 'flex',
         flexDirection: 'column',
@@ -53,99 +52,101 @@ export const AddEvent = () => {
         position: 'relative', // Để có thể đặt dấu X
       }}
     >
-      {/* Dấu X để đóng popup và quay lại EventList */}
-      <button
-        onClick={handleClose}
-        style={{
-          position: 'absolute',
-          top: '20px',
-          right: '20px',
-          backgroundColor: 'transparent',
-          border: 'none',
-          fontSize: '24px',
-          color: '#000',
-          cursor: 'pointer',
-        }}
-      >
-        &times;
-      </button>
-
-      <h1 style={{ color: '#000', marginBottom: '30px' }}>Thêm sự kiện mới</h1>
-      <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '600px' }}>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="title" style={{ display: 'block', marginBottom: '5px', color: '#000' }}>
-            Tiêu đề
-          </label>
-          <input
-            id="title"
-            type="text"
-            value={eventName}
-            onChange={(e) => setEventName(e.target.value)}
-            required
-            style={{
-              padding: '10px',
-              width: '100%',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              color: '#000', // Màu chữ bên trong input
-              backgroundColor: '#fff', // Màu nền bên trong input
-            }}
-          />
-        </div>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="date" style={{ display: 'block', marginBottom: '5px', color: '#000' }}>
-            Ngày
-          </label>
-          <input
-            id="date"
-            type="datetime-local"
-            value={eventTime}
-            onChange={(e) => setEventTime(e.target.value)}
-            required
-            style={{
-              padding: '10px',
-              width: '100%',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              color: '#000', // Màu chữ bên trong input
-              backgroundColor: '#fff', // Màu nền bên trong input
-            }}
-          />
-        </div>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="description" style={{ display: 'block', marginBottom: '5px', color: '#000' }}>
-            Mô tả
-          </label>
-          <textarea
-            id="description"
-            value={eventDescription}
-            onChange={(e) => setEventDescription(e.target.value)}
-            required
-            style={{
-              padding: '10px',
-              width: '100%',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              minHeight: '100px',
-              color: '#000', // Màu chữ bên trong textarea
-              backgroundColor: '#fff', // Màu nền bên trong textarea
-            }}
-          />
-        </div>
+      <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+        {/* Dấu X để đóng popup và quay lại EventList */}
         <button
-          type="submit"
+          onClick={handleClose}
           style={{
-            padding: '10px 20px',
-            backgroundColor: '#28a745',
-            color: '#fff',
+            position: 'absolute',
+            top: '20px',
+            right: '20px',
+            backgroundColor: 'transparent',
             border: 'none',
-            borderRadius: '4px',
+            fontSize: '24px',
+            color: '#000',
             cursor: 'pointer',
           }}
         >
-          Thêm sự kiện
+          &times;
         </button>
-      </form>
+
+        <h1 style={{ color: '#000', marginBottom: '30px' }}>Thêm sự kiện mới</h1>
+        <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '600px' }}>
+          <div style={{ marginBottom: '15px' }}>
+            <label htmlFor="title" style={{ display: 'block', marginBottom: '5px', color: '#000' }}>
+              Tiêu đề
+            </label>
+            <input
+              id="title"
+              type="text"
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
+              required
+              style={{
+                padding: '10px',
+                width: '100%',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                color: '#000', // Màu chữ bên trong input
+                backgroundColor: '#fff', // Màu nền bên trong input
+              }}
+            />
+          </div>
+          <div style={{ marginBottom: '15px' }}>
+            <label htmlFor="date" style={{ display: 'block', marginBottom: '5px', color: '#000' }}>
+              Ngày
+            </label>
+            <input
+              id="date"
+              type="datetime-local"
+              value={eventTime}
+              onChange={(e) => setEventTime(e.target.value)}
+              required
+              style={{
+                padding: '10px',
+                width: '100%',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                color: '#000', // Màu chữ bên trong input
+                backgroundColor: '#fff', // Màu nền bên trong input
+              }}
+            />
+          </div>
+          <div style={{ marginBottom: '15px' }}>
+            <label htmlFor="description" style={{ display: 'block', marginBottom: '5px', color: '#000' }}>
+              Mô tả
+            </label>
+            <textarea
+              id="description"
+              value={eventDescription}
+              onChange={(e) => setEventDescription(e.target.value)}
+              required
+              style={{
+                padding: '10px',
+                width: '100%',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                minHeight: '100px',
+                color: '#000', // Màu chữ bên trong textarea
+                backgroundColor: '#fff', // Màu nền bên trong textarea
+              }}
+            />
+          </div>
+          <button
+            type="submit"
+            style={{
+              padding: '10px 20px',
+              backgroundColor: '#28a745',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            Thêm sự kiện
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
