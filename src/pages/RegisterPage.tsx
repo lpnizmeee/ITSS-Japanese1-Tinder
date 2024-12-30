@@ -32,13 +32,13 @@ export const RegisterPage = () => {
       const response = await axios.post("http://localhost:8888/api/users/register", formData);
 
       if (response.status === 201) {
-        alert("Registration successful!");
+        alert("登録に成功しました！");
       }
     } catch (err) {
       if (err.response) {
-        setError(err.response.data.message || "Registration failed.");
+        setError(err.response.data.message || "登録に失敗しました。");
       } else {
-        setError("Error connecting to the server.");
+        setError("サーバーへの接続エラー。");
       }
     } finally {
       setLoading(false);
@@ -53,18 +53,18 @@ export const RegisterPage = () => {
       <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 bg-gradient-to-r from-darkPink to-coralRed">
         <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md mt-20">
           <h2 className="text-center text-2xl font-bold text-gray-800">
-            Create an Account
+            アカウントを作成
           </h2>
           <form onSubmit={handleSubmit} className="mt-6">
             <div className="mb-4">
               <label className="block text-gray-600" htmlFor="name">
-                Full Name
+                氏名
               </label>
               <input
                 type="text"
                 id="name"
                 name="name"
-                placeholder="Enter your full name"
+                placeholder="氏名を入力してください"
                 value={formData.name}
                 onChange={handleInputChange}
                 className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -73,13 +73,13 @@ export const RegisterPage = () => {
 
             <div className="mb-4">
               <label className="block text-gray-600" htmlFor="email">
-                Email
+                メールアドレス
               </label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder="メールアドレスを入力してください"
                 value={formData.email}
                 onChange={handleInputChange}
                 className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -88,13 +88,13 @@ export const RegisterPage = () => {
 
             <div className="mb-4">
               <label className="block text-gray-600" htmlFor="password">
-                Password
+                パスワード
               </label>
               <input
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Enter your password"
+                placeholder="パスワードを入力してください"
                 value={formData.password}
                 onChange={handleInputChange}
                 className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -103,7 +103,7 @@ export const RegisterPage = () => {
 
             <div className="mb-4">
               <label className="block text-gray-600" htmlFor="gender">
-                Gender
+                性別
               </label>
               <select
                 id="gender"
@@ -112,16 +112,16 @@ export const RegisterPage = () => {
                 onChange={handleInputChange}
                 className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
-                <option value="">Select your gender</option>
-                <option value="0">Male</option>
-                <option value="1">Female</option>
-                <option value="2">Other</option>
+                <option value="">性別を選択してください</option>
+                <option value="0">男性</option>
+                <option value="1">女性</option>
+                <option value="2">その他</option>
               </select>
             </div>
 
             <div className="mb-4">
               <label className="block text-gray-600" htmlFor="role">
-                Role
+                役割
               </label>
               <select
                 id="role"
@@ -130,15 +130,15 @@ export const RegisterPage = () => {
                 onChange={handleInputChange}
                 className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
-                <option value="">Select your Role</option>
-                <option value="0">Teacher</option>
-                <option value="1">Student</option>
+                <option value="">役割を選択してください</option>
+                <option value="0">教師</option>
+                <option value="1">学生</option>
               </select>
             </div>
 
             <div className="mb-4">
               <label className="block text-gray-600" htmlFor="dob">
-                Date of Birth
+                生年月日
               </label>
               <input
                 type="date"
@@ -155,7 +155,7 @@ export const RegisterPage = () => {
               className="w-full rounded-lg bg-indigo-500 py-2 text-white hover:bg-indigo-600"
               disabled={loading}
             >
-              {loading ? "Registering..." : "Register"}
+              {loading ? "登録中..." : "登録"}
             </button>
           </form>
 
@@ -164,9 +164,9 @@ export const RegisterPage = () => {
           )}
 
           <p className="mt-4 text-center text-sm">
-            Already have an account?{" "}
+            すでにアカウントをお持ちですか？{" "}
             <a href="/login" className="text-indigo-500 hover:underline">
-              Login
+              ログイン
             </a>
           </p>
         </div>

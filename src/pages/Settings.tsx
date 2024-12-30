@@ -84,7 +84,7 @@ export const Settings = () => {
         <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
           <div className="settings-header flex items-center justify-center mb-6 mt-6">
             <h2 className="text-5xl font-semibold text-black flex items-center justify-center mb-8 mr-4">
-              ⚙️Settings
+              ⚙️設定
             </h2>
             {/* Add an empty div to maintain spacing */}
             <div></div>
@@ -93,7 +93,7 @@ export const Settings = () => {
             {/* Language */}
             <div>
               <label htmlFor="language" className="block font-bold mb-2">
-                Language
+                言語
               </label>
               <select
                 id="language"
@@ -102,15 +102,15 @@ export const Settings = () => {
                 onChange={handleSettingChange}
                 className="w-full border border-gray-300 rounded px-3 py-2"
               >
-                <option value="English">English</option>
+                <option value="English">英語</option>
                 <option value="Japanese">日本語</option>
-                <option value="Vietnamese">Tiếng Việt</option>
+                <option value="Vietnamese">ベトナム語</option>
               </select>
             </div>
 
             {/* Theme */}
             <div>
-              <label className="block font-bold mb-2">Theme</label>
+              <label className="block font-bold mb-2">テーマ</label>
               <div>
                 <label className="inline-flex items-center">
                   <input
@@ -120,7 +120,7 @@ export const Settings = () => {
                     checked={settings.theme === 'Light'}
                     onChange={handleSettingChange}
                   />
-                  <span className="ml-2">Light</span>
+                  <span className="ml-2">ライト</span>
                 </label>
               </div>
               <div>
@@ -132,14 +132,14 @@ export const Settings = () => {
                     checked={settings.theme === 'Dark'}
                     onChange={handleSettingChange}
                   />
-                  <span className="ml-2">Dark Mode</span>
+                  <span className="ml-2">ダークモード</span>
                 </label>
               </div>
             </div>
 
             {/* Font Size */}
             <div>
-              <label className="block font-bold mb-2">Font Size</label>
+              <label className="block font-bold mb-2">フォントサイズ</label>
               <div>
                 <label className="inline-flex items-center">
                   <input
@@ -149,7 +149,7 @@ export const Settings = () => {
                     checked={settings.fontSize === 'Small'}
                     onChange={handleSettingChange}
                   />
-                  <span className="ml-2">Small</span>
+                  <span className="ml-2">小</span>
                 </label>
               </div>
               <div>
@@ -161,7 +161,7 @@ export const Settings = () => {
                     checked={settings.fontSize === 'Medium'}
                     onChange={handleSettingChange}
                   />
-                  <span className="ml-2">Medium</span>
+                  <span className="ml-2">中</span>
                 </label>
               </div>
               <div>
@@ -173,7 +173,7 @@ export const Settings = () => {
                     checked={settings.fontSize === 'Large'}
                     onChange={handleSettingChange}
                   />
-                  <span className="ml-2">Large</span>
+                  <span className="ml-2">大</span>
                 </label>
               </div>
             </div>
@@ -184,14 +184,14 @@ export const Settings = () => {
                 onClick={handleProfileClick}
                 className="flex items-center text-white hover:underline"
               >
-                <span>Profile</span>
+                <span>プロフィール</span>
                 <span className="ml-2">&rarr;</span>
               </button>
             </div>
 
             {/* Notifications */}
             <div>
-              <label className="block font-bold mb-2">Notifications</label>
+              <label className="block font-bold mb-2">通知</label>
               <div>
                 <label className="inline-flex items-center">
                   <input
@@ -203,14 +203,14 @@ export const Settings = () => {
                       notifications: !prevSettings.notifications
                     }))}
                   />
-                  <span className="ml-2">{settings.notifications ? 'On' : 'Off'}</span>
+                  <span className="ml-2">{settings.notifications ? 'オン' : 'オフ'}</span>
                 </label>
               </div>
             </div>
 
             {/* Password & Account (Placeholder) */}
             <div>
-              <label className="block font-bold mb-2">Password & Account</label>
+              <label className="block font-bold mb-2">パスワードとアカウント</label>
               {/* Add content for password and account settings here */}
             </div>
 
@@ -219,7 +219,7 @@ export const Settings = () => {
               onClick={handleLogout}
               className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 w-full"
             >
-              Logout
+              ログアウト
             </button>
           </div>
         </div>

@@ -31,7 +31,7 @@ export const useAuth = () => {
                 );
                 setUser(response.data.user);
             } catch (err: any) {
-                setError(err.response?.data?.message || "Unauthorized");
+                setError(err.response?.data?.message || "未承認");
                 navigate("/login");
             }
         };

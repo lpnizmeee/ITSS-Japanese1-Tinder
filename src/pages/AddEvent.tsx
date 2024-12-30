@@ -11,14 +11,14 @@ export const AddEvent = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Kiểm tra nếu thông tin không đầy đủ
+    // 情報が不完全な場合のチェック
     if (!eventName || !eventTime || !eventDescription) {
-      alert('Vui lòng điền đầy đủ thông tin.');
+      alert('すべての情報を入力してください。');
       return;
     }
 
     createEvent()
-    // Sau khi thêm sự kiện, chuyển hướng về danh sách sự kiện
+    // イベントを追加した後、イベントリストにリダイレクト
   };
 
   const createEvent = async () => {
@@ -31,12 +31,12 @@ export const AddEvent = () => {
         withCredentials: true
       }
     )
-    navigate('/eventlist'); // Chuyển đến trang EventList
+    navigate('/eventlist'); // EventListページに移動
   }
 
   const handleClose = () => {
-    // Nếu người dùng nhấn vào X, quay lại trang EventList
-    navigate('/eventlist'); // Chuyển đến trang EventList
+    // ユーザーがXをクリックした場合、EventListページに戻る
+    navigate('/eventlist'); // EventListページに移動
   };
 
   return (
@@ -44,16 +44,16 @@ export const AddEvent = () => {
       style={{
         padding: '20px',
         fontFamily: 'Arial, sans-serif',
-        minHeight: '100vh', // Chiếm toàn bộ chiều cao màn hình
+        minHeight: '100vh', // 画面全体の高さを占める
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center', // Căn giữa form theo chiều dọc
-        alignItems: 'center', // Căn giữa form theo chiều ngang
-        position: 'relative', // Để có thể đặt dấu X
+        justifyContent: 'center', // フォームを縦方向に中央揃え
+        alignItems: 'center', // フォームを横方向に中央揃え
+        position: 'relative', // Xボタンを配置するために必要
       }}
     >
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
-        {/* Dấu X để đóng popup và quay lại EventList */}
+        {/* Xボタンでポップアップを閉じてEventListに戻る */}
         <button
           onClick={handleClose}
           style={{
@@ -70,11 +70,11 @@ export const AddEvent = () => {
           &times;
         </button>
 
-        <h1 style={{ color: '#000', marginBottom: '30px' }}>Thêm sự kiện mới</h1>
+        <h1 style={{ color: '#000', marginBottom: '30px' }}>新しいイベントを追加</h1>
         <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '600px' }}>
           <div style={{ marginBottom: '15px' }}>
             <label htmlFor="title" style={{ display: 'block', marginBottom: '5px', color: '#000' }}>
-              Tiêu đề
+              タイトル
             </label>
             <input
               id="title"
@@ -87,14 +87,14 @@ export const AddEvent = () => {
                 width: '100%',
                 border: '1px solid #ccc',
                 borderRadius: '4px',
-                color: '#000', // Màu chữ bên trong input
-                backgroundColor: '#fff', // Màu nền bên trong input
+                color: '#000', // インプット内の文字色
+                backgroundColor: '#fff', // インプット内の背景色
               }}
             />
           </div>
           <div style={{ marginBottom: '15px' }}>
             <label htmlFor="date" style={{ display: 'block', marginBottom: '5px', color: '#000' }}>
-              Ngày
+              日付
             </label>
             <input
               id="date"
@@ -107,14 +107,14 @@ export const AddEvent = () => {
                 width: '100%',
                 border: '1px solid #ccc',
                 borderRadius: '4px',
-                color: '#000', // Màu chữ bên trong input
-                backgroundColor: '#fff', // Màu nền bên trong input
+                color: '#000', // インプット内の文字色
+                backgroundColor: '#fff', // インプット内の背景色
               }}
             />
           </div>
           <div style={{ marginBottom: '15px' }}>
             <label htmlFor="description" style={{ display: 'block', marginBottom: '5px', color: '#000' }}>
-              Mô tả
+              説明
             </label>
             <textarea
               id="description"
@@ -127,8 +127,8 @@ export const AddEvent = () => {
                 border: '1px solid #ccc',
                 borderRadius: '4px',
                 minHeight: '100px',
-                color: '#000', // Màu chữ bên trong textarea
-                backgroundColor: '#fff', // Màu nền bên trong textarea
+                color: '#000', // テキストエリア内の文字色
+                backgroundColor: '#fff', // テキストエリア内の背景色
               }}
             />
           </div>
@@ -143,7 +143,7 @@ export const AddEvent = () => {
               cursor: 'pointer',
             }}
           >
-            Thêm sự kiện
+            イベントを追加
           </button>
         </form>
       </div>

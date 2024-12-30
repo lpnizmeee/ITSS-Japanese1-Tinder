@@ -7,26 +7,26 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const favourites = [
-    "Chạy bộ",
-    "Bóng đá",
-    "Bơi lội",
-    "Yoga",
-    "Ca hát",
-    "Chơi nhạc cụ",
-    "Nhiếp ảnh",
-    "Vẽ tranh",
-    "Đọc sách",
-    "Xem phim",
-    "Chơi game",
-    "Du lịch",
-    "Khám phá ẩm thực",
-    "Thiền",
-    "Chăm sóc cây cối",
-    "Nuôi thú cưng",
-    "Làm đồ handmade",
-    "Tham gia thiện nguyện",
-    "Học ngoại ngữ",
-    "Sưu tầm",
+    "ランニング",
+    "サッカー",
+    "水泳",
+    "ヨガ",
+    "歌うこと",
+    "楽器演奏",
+    "写真撮影",
+    "絵を描く",
+    "読書",
+    "映画鑑賞",
+    "ゲーム",
+    "旅行",
+    "グルメ探索",
+    "瞑想",
+    "植物の世話",
+    "ペットを飼う",
+    "ハンドメイド",
+    "ボランティア",
+    "外国語学習",
+    "コレクション",
 ];
 
 const Header = () => {
@@ -126,7 +126,7 @@ export const EditProfile = () => {
                             />
                             <input
                                 type="text"
-                                placeholder="Paste image URL"
+                                placeholder="画像URLを貼り付け"
                                 value={imageURL}
                                 onChange={(e) => setImageURL(e.target.value)}
                                 className="w-full p-2 border rounded focus:outline-none"
@@ -135,7 +135,7 @@ export const EditProfile = () => {
                         <div className="space-y-4">
                             <input
                                 type="text"
-                                placeholder="Name"
+                                placeholder="名前"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 className="w-full p-2 border rounded"
@@ -164,7 +164,7 @@ export const EditProfile = () => {
                                     checked={gender === 2}
                                     onChange={(e) => setGender(parseInt(e.target.value))}
                                 />
-                                他
+                                その他
                             </div>
                             <DatePicker
                                 selected={selectedDate}
@@ -173,7 +173,7 @@ export const EditProfile = () => {
                                 className="w-full p-2 border rounded"
                             />
                             <div>
-                                <label className="block mb-2 font-medium">Sở thích</label>
+                                <label className="block mb-2 font-medium">趣味</label>
                                 <select
                                     multiple
                                     value={selectedFavourites}
@@ -189,7 +189,7 @@ export const EditProfile = () => {
                             </div>
                         </div>
                         <button type="submit" className="mt-4 w-full bg-blue-500 text-white py-2 rounded">
-                            Save
+                            保存
                         </button>
                     </form>
                 </div>

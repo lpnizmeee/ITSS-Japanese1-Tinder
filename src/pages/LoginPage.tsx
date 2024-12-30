@@ -32,12 +32,12 @@ export const LoginPage = () => {
       );
 
       if (response.status === 200) {
-        alert("Login successful!");
+        alert("ログイン成功！");
         localStorage.setItem("authToken", response.data.token); // Lưu token
         window.location.href = "/dashboard"; // Chuyển đến dashboard
       }
     } catch (err: any) {
-      setError(err.response?.data?.message || "Login failed.");
+      setError(err.response?.data?.message || "ログインに失敗しました。");
     } finally {
       setLoading(false);
     }
@@ -50,18 +50,18 @@ export const LoginPage = () => {
       <div className="flex min-h-screen items-center justify-center bg-gray-100 bg-gradient-to-r from-darkPink to-coralRed ">
         <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
           <h2 className="text-center text-2xl font-bold text-gray-800">
-            Login to Your Account
+            アカウントにログイン
           </h2>
           <form onSubmit={handleSubmit} className="mt-6">
             <div className="mb-4">
               <label className="block text-gray-600" htmlFor="email">
-                Email
+                メールアドレス
               </label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder="メールアドレスを入力してください"
                 value={formData.email}
                 onChange={handleInputChange}
                 className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -69,13 +69,13 @@ export const LoginPage = () => {
             </div>
             <div className="mb-4">
               <label className="block text-gray-600" htmlFor="password">
-                Password
+                パスワード
               </label>
               <input
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Enter your password"
+                placeholder="パスワードを入力してください"
                 value={formData.password}
                 onChange={handleInputChange}
                 className="mt-2 w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -86,16 +86,16 @@ export const LoginPage = () => {
               className="w-full rounded-lg bg-indigo-500 py-2 text-white hover:bg-indigo-600"
               disabled={loading}
             >
-              {loading ? "Logging in..." : "Login"}
+              {loading ? "ログイン中..." : "ログイン"}
             </button>
           </form>
           {error && (
             <p className="mt-4 text-center text-sm text-red-500">{error}</p>
           )}
           <p className="mt-4 text-center text-sm">
-            Don’t have an account?{" "}
+            アカウントをお持ちでないですか？{" "}
             <a href="/register" className="text-indigo-500 hover:underline">
-              Sign Up
+              サインアップ
             </a>
           </p>
         </div>

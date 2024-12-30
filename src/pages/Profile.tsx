@@ -48,7 +48,7 @@ export const Profile = () => {
                 );
                 setUser(response.data.user);
             } catch (err: any) {
-                setError(err.response?.data?.message || "Error fetching profile");
+                setError(err.response?.data?.message || "プロフィールの取得中にエラーが発生しました");
             }
         };
         fetchProfile();
@@ -60,11 +60,11 @@ export const Profile = () => {
     };
 
     if (error) {
-        return <div className="text-center text-red-500">Error: {error}</div>;
+        return <div className="text-center text-red-500">エラー: {error}</div>;
     }
 
     if (!user) {
-        return <div className="text-center">Loading...</div>;
+        return <div className="text-center">読み込み中...</div>;
     }
 
     return (
@@ -77,7 +77,7 @@ export const Profile = () => {
                         <div className="profile-header flex flex-col items-center">
                             <img
                                 src={user.imageURL || background}
-                                alt="Profile"
+                                alt="プロフィール"
                                 className="profile-pic w-64 h-auto mb-4"
                             />
                             <h2 className="profile-name text-2xl font-semibold">{user.name}</h2>
@@ -101,7 +101,7 @@ export const Profile = () => {
                             </div>
 
                             <div className="flex justify-between items-center mb-2">
-                                <span className="font-bold">誕生日</span>
+                                <span className="font-bold">誕生日:</span>
                                 <span>{user.dob}</span>
                             </div>
 
@@ -146,7 +146,7 @@ export const Profile = () => {
                                 onClick={onEdit}
                                 className="edit-button bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
                             >
-                                Edit Profile
+                                プロフィールを編集
                             </button>
                         </div>
                     </div>
