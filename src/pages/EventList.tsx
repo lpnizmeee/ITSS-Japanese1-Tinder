@@ -79,13 +79,13 @@ export const EventList = () => {
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
         <Header />
         <div className='container mx-auto p-4 mt-5'>
-          <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Danh sách sự kiện</h1>
+          <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>イベントリスト</h1>
 
           {/* Bộ lọc title */}
           <div style={{ textAlign: 'center', marginBottom: '20px' }}>
             <input
               type="text"
-              placeholder="Tìm kiếm theo tiêu đề sự kiện..."
+              placeholder="イベントタイトルで検索..."
               value={searchTerm}
               onChange={handleSearch}
               style={{
@@ -113,10 +113,10 @@ export const EventList = () => {
               >
                 <h2 style={{ marginBottom: '10px', color: '#333' }}>{event.eventName}</h2>
                 <p style={{ marginBottom: '5px' }}>
-                  <strong>Thời gian:</strong> {moment(event.eventTime).format("HH:mm:ss DD-MM-YYYY")}
+                  <strong>時間:</strong> {moment(event.eventTime).format("HH:mm:ss DD-MM-YYYY")}
                 </p>
                 <p style={{ marginBottom: '5px' }}>
-                  <strong>Địa điểm:</strong> {event.location ? event.location : getLocation()}
+                  <strong>場所:</strong> {event.location ? event.location : getLocation()}
                 </p>
                 <p style={{ marginBottom: '10px' }}>{event.eventDescription}</p>
 
@@ -134,7 +134,7 @@ export const EventList = () => {
                     }}
                     onClick={() => handleViewDetails(event)}
                   >
-                    Xem chi tiết
+                    詳細を見る
                   </button>
 
                   {/* Nút đăng ký - Nằm bên phải */}
@@ -149,13 +149,13 @@ export const EventList = () => {
                     }}
                     onClick={() => handleRegister(event.eventID)}
                   >
-                    {registeredEvents.includes(event.eventID) ? 'Hủy đăng ký' : 'Đăng ký'}
+                    {registeredEvents.includes(event.eventID) ? '登録をキャンセル' : '登録'}
                   </button>
                 </div>
               </div>
             ))}
             {filteredEvents.length === 0 && (
-              <p style={{ textAlign: 'center', color: '#888' }}>Không tìm thấy sự kiện nào.</p>
+              <p style={{ textAlign: 'center', color: '#888' }}>イベントが見つかりません。</p>
             )}
           </div>
 
@@ -186,10 +186,10 @@ export const EventList = () => {
               >
                 <h2 style={{ color: '#333' }}>{selectedEvent.eventName}</h2>
                 <p>
-                  <strong>Thời gian:</strong> {moment(selectedEvent.eventTime).format("HH:mm:ss DD-MM-YYYY")}
+                  <strong>時間:</strong> {moment(selectedEvent.eventTime).format("HH:mm:ss DD-MM-YYYY")}
                 </p>
                 <p>
-                  <strong>Địa điểm:</strong> {getLocation()}
+                  <strong>場所:</strong> {getLocation()}
                 </p>
                 <p>{selectedEvent.eventDescription}</p>
                 <button
@@ -205,7 +205,7 @@ export const EventList = () => {
                     margin: '10px auto 0',
                   }}
                 >
-                  Đóng
+                  閉じる
                 </button>
               </div>
             </div>

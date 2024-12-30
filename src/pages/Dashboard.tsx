@@ -94,9 +94,9 @@ export const Dashboard = () => {
       return (
         <div className="flex flex-grow flex-col items-center justify-center bg-gray-100">
           <h2 className="text-xl font-semibold text-gray-500">
-            No users found
+            ユーザーが見つかりません
           </h2>
-          <p className="text-sm text-gray-400">Please try again later.</p>
+          <p className="text-sm text-gray-400">後でもう一度お試しください。</p>
         </div>
       );
     } else {
@@ -182,7 +182,7 @@ export const Dashboard = () => {
         {/* Overlay for better readability */}
         <h1 className="text-3xl font-bold text-white">{user.name}</h1>
         <span className="rounded-full bg-gray-800 bg-opacity-75 px-2 py-1 text-sm text-white">
-          {user.role === 0 ? "👨‍🏫 Teacher" : "🎓 Student"}
+          {user.role === 0 ? "👨‍🏫 先生" : "🎓 学生"}
         </span>
         <div className="mt-2 flex max-w-[90%] flex-wrap items-center justify-center gap-2">
           {user.favorites.map((fav, index) => (

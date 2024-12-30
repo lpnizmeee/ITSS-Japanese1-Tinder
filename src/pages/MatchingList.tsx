@@ -50,19 +50,17 @@ export const MatchingList = () => {
     useEffect(() => {
         const fetchProfileAndMatchingUsers = async () => {
             try {
-                // Fetch user profile
                 const profileResponse = await axios.get<{ user: UserInfo }>(
-                    "http://localhost:8888/api/users/profile", // API lấy thông tin từ session
+                    "http://localhost:8888/api/users/profile",
                     { withCredentials: true }
                 );
                 const userId = profileResponse.data.user.userID;
                 setUserId(userId);
 
-                // Fetch matching users
                 const matchingResponse = await axios.post("http://localhost:8888/api/users/matching", { userId });
                 setMatchingUsers(matchingResponse.data.matchingUsers);
             } catch (err: any) {
-                console.error("Error fetching data:", err);
+                console.error("データの取得中にエラーが発生しました:", err);
             }
         };
 
@@ -73,7 +71,7 @@ export const MatchingList = () => {
         if (matchingID) {
             navigate(`/chatbox/${matchingID}`);
         } else {
-            console.error("matchingID is undefined");
+            console.error("matchingIDが未定義です");
         }
     };
 

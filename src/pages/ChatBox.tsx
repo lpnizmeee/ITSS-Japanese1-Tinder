@@ -135,7 +135,7 @@ export const ChatBox = () => {
                             type="text"
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
-                            placeholder="Type a message..."
+                            placeholder="メッセージを入力..."
                         />
                         <button className="text-white bg-blue-500 p-3 rounded-lg" type="submit">➜</button>
                     </form>
