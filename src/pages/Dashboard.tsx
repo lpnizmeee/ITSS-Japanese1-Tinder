@@ -3,11 +3,17 @@ import axios from "axios";
 import { ArrowRightIcon } from "@heroicons/react/solid";
 import favicon from "../assets/icons/favicon.ico";
 import { useNavigate } from "react-router-dom";
+import { Loader, Nav } from '../components';
 
 export const Dashboard = () => {
   const [matchingUsers, setMatchingUsers] = useState([]);
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(1);
 
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
+  };
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -97,6 +103,7 @@ export const Dashboard = () => {
       return (
         <div className="flex flex-grow items-center justify-center bg-gradient-to-r from-darkPink to-coralRed">
           <ProfileCard user={matchingUsers[currentUserIndex]} />
+          <Notification />
         </div>
       );
     }
@@ -109,7 +116,7 @@ export const Dashboard = () => {
           <img src={favicon} alt="Logo" className="h-full w-full" />
         </div>
         <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
-          <span role="img" aria-label="Notification">
+          <span onClick={() => toggleNotifications()} role="img" aria-label="Notification">
             🔔
           </span>
         </button>
@@ -140,6 +147,26 @@ export const Dashboard = () => {
       </button>
     </div>
   );
+
+  const Notification = () => {
+    if (showNotifications) {
+      return (
+        <div className="fixed top-12 left-6 z-50">
+          <div className="w-80 min-h-96 rounded-lg bg-white p-8 shadow-md">
+            <div className="noti-container ">
+              <h2 className=" text-center text-xl font-semibold">Notifications</h2>
+              <div className="notification-item">
+                <p className="mb-4 mt-4">Joe likes you</p> {/* Added margin-bottom */}
+              </div>
+              <div className="notification-item">
+                <p className="mb-2 mt-2">Having dinner with Minh</p> {/* Added margin-bottom */}
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    };
+  }
 
   const ProfileCard = ({ user }) => (
     <div

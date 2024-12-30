@@ -15,7 +15,7 @@ export const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -23,7 +23,7 @@ export const RegisterPage = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
@@ -34,7 +34,7 @@ export const RegisterPage = () => {
       if (response.status === 201) {
         alert("Registration successful!");
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response) {
         setError(err.response.data.message || "Registration failed.");
       } else {
