@@ -32,10 +32,10 @@ export const ResetPassword = () => {
 
     try {
       setLoader(true);
-      const response = await axios.get(`http://localhost:8888/api/users/checkEmail?email=${email}`, 
+      const response = await axios.get(`http://localhost:8888/api/users/checkEmail?email=${email}`,
         { withCredentials: true });
       if (!response.data.exists) {
-        setError('Account name does not exist.');
+        setError('電子メールが存在しません。');
         setLoader(false);
         return;
       }
@@ -43,8 +43,8 @@ export const ResetPassword = () => {
       // If account name exists, show password fields
       setCheckAccount(true);
     } catch (err: any) {
-      console.error('Error checking account existence:', err);
-      setError('Failed to check account existence. Please try again later.');
+      console.error('電子メールの存在を確認中にエラーが発生しました:', err);
+      setError('メールの存在を確認できませんでした。しばらくしてからもう一度お試しください。');
     } finally {
       setLoader(false);
     }
@@ -54,7 +54,7 @@ export const ResetPassword = () => {
     e.preventDefault();
 
     if (newPassword !== confirmPassword) {
-      setError('Passwords do not match!');
+      setError('パスワードが一致しません。');
       return;
     }
 
@@ -62,12 +62,12 @@ export const ResetPassword = () => {
       setLoader(true);
       await axios.post('http://localhost:8888/api/users/resetPassword', {
         newPassword,
-        email, 
+        email,
       }, { withCredentials: true });
       setCheckPassword(true);
     } catch (err: any) {
-      console.error('Error resetting password:', err);
-      setError('Failed to reset password. Please try again later.');
+      console.error('パスワードのリセット中にエラーが発生しました:', err);
+      setError('パスワードのリセットに失敗しました。しばらくしてからもう一度お試しください。');
     } finally {
       setLoader(false);
     }
@@ -84,7 +84,8 @@ export const ResetPassword = () => {
         <Nav />
         <div className="relative min-h-screen bg-gray-100">
           <div className="absolute top-1/4 left-0 w-full text-center">
-            <span className="text-green-500 text-4xl font-bold">Password changed successfully!</span>
+            <span className="text-green-500 text-4xl font-bold">パスワードが正常に変更されました！
+            </span>
           </div>
 
           <div className="flex items-center justify-center min-h-screen">
@@ -92,7 +93,7 @@ export const ResetPassword = () => {
               onClick={handleGoToLogin}
               className="bg-purple-500 text-white px-4 py-2 rounded"
             >
-              Go to Login Page
+              ログインページへ
             </button>
           </div>
         </div>
@@ -107,7 +108,7 @@ export const ResetPassword = () => {
         <div className="flex min-h-screen items-center justify-center bg-gray-100">
           <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
             <div className="reset-password-container max-w-md mx-auto p-4">
-              <h2 className="text-xl font-semibold mb-4">Reset Password</h2>
+              <h2 className="text-xl font-semibold mb-4">パスワードをリセット</h2>
 
               {error && <div className="text-red-500 mb-4">{error}</div>} {/* Display error message */}
               { }
@@ -116,7 +117,7 @@ export const ResetPassword = () => {
                 <div className="mb-4">
                   <input
                     type="password"
-                    placeholder="Enter New Password"
+                    placeholder="新しいパスワードを入力してください"
                     value={newPassword}
                     onChange={handleNewPasswordChange}
                     className="w-full border border-gray-400 px-3 py-2 rounded"
@@ -125,14 +126,14 @@ export const ResetPassword = () => {
                 <div className="mb-4">
                   <input
                     type="password"
-                    placeholder="Confirm New Password"
+                    placeholder="新しいパスワードの確認"
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
                     className="w-full border border-gray-400 px-3 py-2 rounded"
                   />
                 </div>
                 <button type="submit" className="bg-purple-500 text-white px-4 py-2 rounded">
-                  Submit
+                  送信
                 </button>
               </form>
               {isLoading && <Loader />}
@@ -149,7 +150,7 @@ export const ResetPassword = () => {
       <div className="flex min-h-screen items-center justify-center bg-gray-100 ">
         <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
           <div className="reset-password-container max-w-md mx-auto p-4">
-            <h2 className="text-xl font-semibold mb-4">Input Your Email</h2>
+            <h2 className="text-xl font-semibold mb-4">メールアドレスを入力してください</h2>
 
             {error && <div className="text-red-500 mb-4">{error}</div>} {/* Display error message */}
 
@@ -157,17 +158,16 @@ export const ResetPassword = () => {
               <div className="mb-4">
                 <input
                   type="text"
-                  placeholder="Enter Your Email"
+                  placeholder="メールアドレスを入力してください"
                   value={email}
                   onChange={handleAccountNameInput}
                   className="w-full border border-gray-400 px-3 py-2 rounded"
                 />
               </div>
               <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
-                Next
+                次
               </button>
             </form>
-            {isLoading && <Loader />}
           </div>
         </div>
       </div>
